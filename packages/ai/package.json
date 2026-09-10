@@ -1,0 +1,9 @@
+{
+  "name": "@interviewforge/ai",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {".": "./src/index.ts"},
+  "scripts": {"typecheck": "tsc --noEmit"},
+  "dependencies": {"@interviewforge/core": "*"},
+  "devDependencies": {"typescript":"^5.9.0"}
+}

@@ -1,0 +1,6 @@
+{
+  "name":"@interviewforge/db","version":"0.1.0","type":"module","exports":{".":"./src/client.ts","./schema":"./src/schema.ts"},
+  "scripts":{"typecheck":"tsc --noEmit","db:generate":"drizzle-kit generate","db:migrate":"drizzle-kit migrate","db:seed":"tsx src/seed.ts"},
+  "dependencies":{"drizzle-orm":"^0.44.0","postgres":"^3.4.7"},
+  "devDependencies":{"drizzle-kit":"^0.31.0","tsx":"^4.20.0","typescript":"^5.9.0"}
+}

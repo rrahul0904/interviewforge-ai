@@ -1,0 +1,17 @@
+{
+  "name": "interviewforge-ai",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w @interviewforge/web",
+    "build": "npm run build -ws --if-present",
+    "lint": "npm run lint -ws --if-present",
+    "test": "npm run test -ws --if-present",
+    "typecheck": "npm run typecheck -ws --if-present",
+    "db:generate": "npm run db:generate -w @interviewforge/db",
+    "db:migrate": "npm run db:migrate -w @interviewforge/db",
+    "db:seed": "npm run db:seed -w @interviewforge/db"
+  },
+  "engines": {"node": ">=22"}
+}
