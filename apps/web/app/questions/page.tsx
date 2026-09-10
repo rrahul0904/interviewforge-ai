@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { queryQuestions, type Difficulty, type QuestionSort, type Track } from "@interviewforge/core";
-import { companies, questions } from "@/lib/demo-data";
+import { type Difficulty, type QuestionSort, type Track } from "@interviewforge/core";
+import { getRepositories } from "@/lib/repositories";
 import { parseQuestionQuery, queryToSearchParams, type PageSearchParams } from "@/lib/question-query";
 
 const tracks: Array<[Track, string]> = [["CODING","Coding"],["SQL","SQL"],["SYSTEM_DESIGN","System Design"],["ML_SYSTEM_DESIGN","ML System Design"],["OOD","OOD"],["BEHAVIORAL","Behavioral"]];
@@ -10,7 +10,8 @@ const sorts: Array<[QuestionSort, string]> = [["FREQUENCY","Frequency"],["RECENT
 export default async function QuestionsPage({ searchParams }: { searchParams: Promise<PageSearchParams> }) {
   const raw = await searchParams;
   const query = parseQuestionQuery(raw);
-  const result = queryQuestions(questions, query);
+  const repositories = getRepositories();
+  const [result, companies] = await Promise.all([repositories.questions.list(query), repositories.companies.list()]);
   const previousOffset = Math.max(0, result.offset - result.limit);
   const previousHref = `/questions?${queryToSearchParams(query, { offset: previousOffset }).toString()}`;
   const nextHref = result.nextOffset === null ? null : `/questions?${queryToSearchParams(query, { offset: result.nextOffset }).toString()}`;
@@ -26,7 +27,7 @@ export default async function QuestionsPage({ searchParams }: { searchParams: Pr
       <label><span>Sort</span><select name="sort" defaultValue={query.sort ?? "FREQUENCY"}>{sorts.map(([value,label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       <div className="filter-actions"><button className="button small" type="submit">Apply filters</button><Link className="button ghost small" href="/questions">Reset</Link></div>
     </form>
-    <div className="results-summary"><strong>{result.total} matching questions</strong><span>Showing {result.data.length ? result.offset + 1 : 0}–{result.offset + result.data.length}</span></div>
+    <div className="results-summary"><strong>{result.total} matching questions</strong><span>Showing {result.tata.length ? result.offset + 1 : 0}–{result.offset + result.data.length}</span></div>
     <div className="question-list">{result.data.map((q, index) => <Link className="question-row" href={`/questions/${q.slug}`} key={q.id}>
       <span className="question-index">{String(result.offset+index+1).padStart(2,"0")}</span>
       <span className="question-title"><strong>{q.title}</strong><span>{q.companies.join(" · ")} · {q.skills.join(" · ")}</span></span>

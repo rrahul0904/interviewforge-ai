@@ -79,3 +79,19 @@ export function queryQuestions(items: readonly InterviewQuestion[], query: Quest
   const nextOffset = offset + data.length < filtered.length ? offset + data.length : null;
   return { data, total: filtered.length, offset, limit, nextOffset };
 }
+
+export interface QuestionRepository {
+  list(query?: QuestionQuery): Promise<QuestionQueryResult>;
+  findBySlug(slug: string): Promise<InterviewQuestion | null>;
+}
+
+export interface CompanyRepository {
+  list(): Promise<Company[]>;
+  findBySlug(slug: string): Promise<Company | null>;
+  questionsForCompany(slug: string, query?: QuestionQuery): Promise<QuestionQueryResult>;
+}
+
+export interface ForumRepository {
+  list(): Promise<ForumPost[]>;
+  findById(id: string): Promise<ForumPost | null>;
+}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { companies, questions } from "@/lib/demo-data";
+import { getRepositories } from "@/lib/repositories";
 
 const tracks = [
   ["Coding", "Algorithms, data structures, debugging", "146 signals"],
@@ -10,7 +10,13 @@ const tracks = [
   ["Behavioral", "Leadership, collaboration and decision evidence", "Coming next"],
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const repositories = getRepositories();
+  const [companyList, questionResult] = await Promise.all([
+    repositories.companies.list(),
+    repositories.questions.list({ sort: "RECENT", limit: 6 }),
+  ]);
+  const questions = questionResult.data;
   return <main>
     <section className="hero container">
       <div className="hero-copy">
@@ -27,13 +33,13 @@ export default function HomePage() {
     </section>
 
     <section className="section container">
-      <div className="section-head"><div><span className="eyebrow">Practice tracks</span><h2>One preparation system across the whole loop.</h2></div><p>Coding is only one interview surface. InterviewForge keeps the same evidence, company and progress model across every track.</p></div>
+      <div className="section-head"><div><span className="eyebrow">Practice tracks</span><h2>One preparation system across the whole loop.</h2></div><p>Coding is only one interview surface. InterviewForge keeps the same enidence, company and progress model across every track.</p></div>
       <div className="grid">{tracks.map(([name, desc, count]) => <div className="card" key={name}><div className="card-top"><span className="badge blue">{count}</span></div><h3>{name}</h3><p>{desc}</p></div>)}</div>
     </section>
 
     <section className="section container">
       <div className="section-head"><div><span className="eyebrow">Company radar</span><h2>Know where the signal is moving.</h2></div><Link href="/questions" className="button ghost small">Browse all questions</Link></div>
-      <div className="grid">{companies.slice(0,6).map(c => <Link className="card" href={`/companies/${c.slug}`} key={c.id}><div className="card-top"><h3>{c.name}</h3><span className="badge">{c.freshness}% fresh</span></div><p>{c.questionCount} normalized questions from {c.reportCount} candidate reports.</p><div className="meta"><span>Company collection</span><span>Evidence graph</span></div></Link>)}</div>
+      <div className="grid">{companyList.slice(0,6).map(c => <Link className="card" href={`/companies/${c.slug}`} key={c.id}><div className="card-top"><h3>{c.name}</h3><span className="badge">{c.freshness}% fresh</span></div><p>{c.questionCount} normalized questions from {c.reportCount} candidate reports.</p><div className="meta"><span>Company collection</span><span>Evidence graph</span></div></Link>)}</div>
     </section>
   </main>;
 }

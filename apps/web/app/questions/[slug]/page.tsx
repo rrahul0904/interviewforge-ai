@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getQuestion } from "@/lib/demo-data";
+import { getRepositories } from "@/lib/repositories";
 
 export default async function QuestionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const q = getQuestion(slug);
+  const q = await getRepositories().questions.findBySlug(slug);
   if (!q) notFound();
   return <main className="container">
     <header className="page-header"><span className="eyebrow">{q.track.replaceAll("_", " ")}</span><h1>{q.title}</h1><p>{q.summary}</p><div className="meta"><span>{q.difficulty}</span><span>{q.reportCount} reports</span><span>{Math.round(q.confidence*100)}% confidence</span><span>last reported {q.lastReportedAt}</span></div></header>
