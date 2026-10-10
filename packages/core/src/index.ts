@@ -95,3 +95,5 @@ export interface ForumRepository {
   list(): Promise<ForumPost[]>;
   findById(id: string): Promise<ForumPost | null>;
 }
+
+export * from "./candidate-intelligence";

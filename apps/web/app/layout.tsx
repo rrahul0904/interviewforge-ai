@@ -11,6 +11,7 @@ const nav = [
   ["Questions", "/questions"],
   ["Companies", "/companies/openai"],
   ["Practice", "/practice/rate-limiter-design"],
+  ["Mock Interview", "/mock-interview"],
   ["Forum", "/forum"],
 ] as const;
 
@@ -22,13 +23,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <nav className="nav container">
             <Link href="/" className="brand"><span className="brand-mark">IF</span><span>InterviewForge</span></Link>
             <div className="nav-links">{nav.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}</div>
-            <Link className="button ghost small" href="/questions">Start preparing</Link>
+            <Link className="button ghost small" href="/mock-interview">Start mock interview</Link>
           </nav>
         </header>
         {children}
         <footer className="footer container">
           <div><strong>InterviewForge AI</strong><p>Clean-room interview intelligence built around evidence, freshness and candidate outcomes.</p></div>
-          <div className="footer-links"><Link href="/questions">Question bank</Link><Link href="/forum">Community</Link><a href="https://github.com/rrahul0904/interviewforge-ai">GitHub</a></div>
+          <div className="footer-links"><Link href="/questions">Question bank</Link><Link href="/mock-interview">Mock interview</Link><Link href="/forum">Community</Link><a href="https://github.com/rrahul0904/interviewforge-ai">GitHub</a></div>
         </footer>
       </body>
     </html>
