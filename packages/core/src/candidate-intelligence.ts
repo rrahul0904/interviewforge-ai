@@ -1,4 +1,4 @@
-import type { InterviewQuestion, Track } from "./index.ts";
+import type { InterviewQuestion, Track } from "./index";
 
 export type IntegrityMode = "PRACTICE" | "AI_ALLOWED" | "LIVE_NOTES";
 export type ResponseFormat = "CONCISE" | "BULLETS" | "STAR" | "FOLLOW_UP";
