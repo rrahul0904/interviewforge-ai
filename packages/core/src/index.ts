@@ -96,4 +96,4 @@ export interface ForumRepository {
   findById(id: string): Promise<ForumPost | null>;
 }
 
-export * from "./candidate-intelligence.ts";
+export * from "./candidate-intelligence";
