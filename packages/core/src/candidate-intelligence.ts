@@ -206,7 +206,7 @@ export function scoreInterviewAnswer(answer: string, prompt: MockInterviewPrompt
   const promptTerms = prompt.prompt.toLowerCase().replace(/[^a-z0-9 ]/g, " ").split(/\s+/).filter((term) => term.length >= 5);
   const matchedTerms = promptTerms.filter((term) => lower.includes(term)).length;
   const relevance = clampScore(45 + Math.min(45, matchedTerms * 9) + (words.length >= 35 ? 10 : 0));
-  const evidenceMarkers = [/\b\d+%\b/, /\b\d+\b/, /because\b/, /result\b/, /impact\b/, /measured\b/, /reduced\b/, /increased\b/];
+  const evidenceMarkers = [/\b\d+(?:\.\d+)?%/, /\b\d+\b/, /because\b/, /result\b/, /impact\b/, /measured\b/, /reduc(?:ed|tion)\b/, /increased\b/];
   const evidence = clampScore(30 + evidenceMarkers.filter((pattern) => pattern.test(lower)).length * 10);
   const structureMarkers = [/situation\b/, /task\b/, /action\b/, /result\b/, /first\b/, /then\b/, /finally\b/];
   const structure = clampScore(35 + structureMarkers.filter((pattern) => pattern.test(lower)).length * 9);
